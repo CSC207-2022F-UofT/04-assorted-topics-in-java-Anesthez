@@ -1,3 +1,4 @@
+import java.util.List;
 /* TODO: Create a subclass of Trader named DrivableTrader
  * This class should be identical to Trader, except that it takes
  * only Drivable objects in its inventory, wishlist, etc.
@@ -9,5 +10,34 @@
  *
  * Look at DomesticatableTrader.java for an example.
  */
+public class DrivableTrader extends Trader<Drivable>{
 
-import java.util.List;
+    /**
+     * Construct a Trader, giving them the given inventory,
+     * wishlist, and money.
+     *
+     * @param inventory Objects in this Trader's inventory
+     * @param wishlist  Objects in this Trader's wishlist
+     * @param money     The Trader's money
+     */
+    public DrivableTrader(List<Drivable> inventory, List<Drivable> wishlist, int money) {
+        super(inventory, wishlist, money);
+    }
+
+    public DrivableTrader(int money){
+        super(money);
+    }
+
+    @Override
+    public int getSellingPrice(Drivable item) {
+        int super_price = super.getSellingPrice(item);
+
+        if (super_price == Tradable.MISSING_PRICE) {
+            return super_price;
+        }
+
+        return item.getMaxSpeed() + ((Tradable) item).getPrice();
+    }
+}
+
+
